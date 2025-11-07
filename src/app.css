@@ -1,0 +1,37 @@
+:root {
+  --verde-boyaca: #1b5e20;
+  --azul-cielo: #1565c0;
+  --tierra: #795548;
+  --blanco: #f5f5f5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9 0%, #b2dfdb 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: var(--verde-boyaca);
+  color: var(--blanco);
+  padding: 1.5rem 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}

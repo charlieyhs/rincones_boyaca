@@ -1,9 +1,18 @@
+import MapaBoyaca from "./components/maps/Mapa"
+import './app.css'
 
 function App() {
-
   return (
-    <h1>HOLA</h1>
-  )
+    <div className="app">
+      <header className="app-header">
+        🌄 Rincones Boyacá
+      </header>
+
+      <main className="app-content">
+        <MapaBoyaca />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
