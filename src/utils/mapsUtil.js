@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import styles from "../components/maps/mapa.module.css"
+import styles from "../components/maps/mapa.module.css";
 
 export const colors = {
   HISTORICO: '#3b82f6',
@@ -10,27 +10,80 @@ export const colors = {
 
 export const colorsList = Object.entries(colors).map(([id, color]) => ({
   id,
-  label: id.charAt(0) + id.slice(1).toLowerCase(), // "HISTORICO" -> "Historico"
+  label: id.charAt(0) + id.slice(1).toLowerCase(),
   color
 }));
 
-
-// Iconos personalizados por categoría con SVG
-export function colorMarcadorPosicion(categoria){
-
+// Iconos SVG mejorados con mejor diseño
+export function colorMarcadorPosicion(categoria) {
   const color = colors[categoria] || '#6366f1';
   
   const svgIcon = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 16 16">
-      <path fill="${color}" d="M8 0C5.2 0 3 2.2 3 5s4 11 5 11s5-8.2 5-11s-2.2-5-5-5zm0 8C6.3 8 5 6.7 5 5s1.3-3 3-3s3 1.3 3 3s-1.3 3-3 3z"/>
+    <svg width="40" height="50" viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sombra suave -->
+      <ellipse cx="20" cy="47" rx="10" ry="3" fill="rgba(0,0,0,0.25)"/>
+      
+      <!-- Pin con gradiente -->
+      <defs>
+        <linearGradient id="grad-${categoria}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:${color};stop-opacity:1" />
+          <stop offset="100%" style="stop-color:${color};stop-opacity:0.8" />
+        </linearGradient>
+        <filter id="shadow-${categoria}">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+        </filter>
+      </defs>
+      
+      <!-- Pin principal con filtro de sombra -->
+      <path 
+        d="M20 0 C9 0 0 9 0 20 C0 30 20 50 20 50 C20 50 40 30 40 20 C40 9 31 0 20 0 Z" 
+        fill="url(#grad-${categoria})"
+        filter="url(#shadow-${categoria})"
+      />
+      
+      <!-- Círculo interior brillante -->
+      <circle cx="20" cy="18" r="8" fill="white" opacity="0.95"/>
+      
+      <!-- Punto central -->
+      <circle cx="20" cy="18" r="5" fill="${color}"/>
+      
+      <!-- Brillo superior -->
+      <circle cx="18" cy="15" r="2" fill="white" opacity="0.6"/>
     </svg>
   `;
   
   return new L.DivIcon({
     html: svgIcon,
-    className: styles.custom_marker,
+    className: `${styles.custom_marker} marker-${categoria}`,
     iconSize: [40, 50],
     iconAnchor: [20, 50],
     popupAnchor: [0, -50]
   });
-};
+}
+
+// Función para obtener ícono según categoría
+export function getIconoCategoria(categoria) {
+  const iconos = {
+    HISTORICO: '🏛️',
+    MONUMENTO: '🗿',
+    COLONIAL: '🏰',
+    NATURAL: '🌳'
+  };
+  return iconos[categoria] || '📍';
+}
+
+// Función para formatear descripción corta
+export function truncateText(text, maxLength = 100) {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + '...';
+}
+
+// Función para calcular centro del mapa basado en sitios
+export function calcularCentroMapa(sitios) {
+  if (sitios.length === 0) return [5.6513754, -74.1571872];
+  
+  const sumLat = sitios.reduce((sum, s) => sum + s.coords[0], 0);
+  const sumLng = sitios.reduce((sum, s) => sum + s.coords[1], 0);
+  
+  return [sumLat / sitios.length, sumLng / sitios.length];
+}
