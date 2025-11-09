@@ -35,3 +35,28 @@
   align-items: center;
   padding: 2rem;
 }
+
+.leaflet-container {
+  width: 80vw;
+  height: 70vh;
+  border-radius: 16px;
+  border: 3px solid var(--verde-boyaca);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  color: #333;
+}
+
+.leaflet-popup-content strong {
+  color: #0b6623;
+  margin-bottom: 10px;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
+}
+.leaflet-popup-tip {
+  display: none !important;
+}

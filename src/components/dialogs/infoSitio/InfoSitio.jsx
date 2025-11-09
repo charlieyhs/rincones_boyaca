@@ -1,4 +1,5 @@
-import { CameraAlt, Close, Hiking, Map, Star, Timeline } from "@mui/icons-material";
+import styles from "./InfoSito.module.css"
+import { CameraAlt, Close, Hiking, Star, Timeline } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 
 import PropTypes from "prop-types";
+const COLOR_DEFECTO = "#66bb6a";
 
 const InfoSitio = ({ sitio, open, onClose }) => {
   return (
@@ -33,20 +35,14 @@ const InfoSitio = ({ sitio, open, onClose }) => {
             background: "linear-gradient(145deg, #0a2a1d 0%, #143b2b 100%)",
             color: "#fff",
             borderRadius: 3,
-            border: `1px solid ${sitio?.color || "#66bb6a"}40`,
+            border: `1px solid ${sitio?.color || COLOR_DEFECTO}40`,
           },
         },
       }}
     >
-      {/* Título con ícono y cierre */}
       <DialogTitle
         component="div"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          pb: 1,
-        }}
+        className={styles.titulo_dialogo}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Box
@@ -54,24 +50,21 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               display: "inline-flex",
               p: 2,
               borderRadius: "50%",
-              backgroundColor: `${sitio.color || "#66bb6a"}20`,
-              color: sitio.color || "#66bb6a",
+              backgroundColor: `${sitio.color || ""}20`,
+              color: sitio.color || COLOR_DEFECTO,
             }}
           >
-            <Map />
+            <Hiking />
           </Box>
           <Box>
-            <Typography
-              variant="h4"
-              sx={{ color: sitio.color || "#66bb6a", fontWeight: "bold" }}
-            >
+            <h2 style={{color: sitio.color || COLOR_DEFECTO, fontWeight: "bold"}}>
               {sitio.nombre}
-            </Typography>
+            </h2>
             <Chip
               label={sitio.categoria}
               size="small"
               sx={{
-                backgroundColor: sitio.color || "#66bb6a",
+                backgroundColor: sitio.color || COLOR_DEFECTO,
                 color: "#fff",
                 mt: 1,
               }}
@@ -83,10 +76,8 @@ const InfoSitio = ({ sitio, open, onClose }) => {
         </IconButton>
       </DialogTitle>
 
-      {/* Contenido principal */}
       <DialogContent>
         <Grid container spacing={3}>
-          {/* Imagen principal */}
           <Grid size={{ xs: 12 }}>
             <CardMedia
               component="img"
@@ -95,18 +86,16 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               sx={{
                 height: 300,
                 borderRadius: 2,
-                objectFit: "cover",
                 mb: 2,
-                border: `1px solid ${sitio.color || "#66bb6a"}40`,
+                border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
               }}
             />
           </Grid>
 
-          {/* Descripción */}
           <Grid size={{ xs: 12 }}>
             <Typography
               variant="h6"
-              sx={{ color: sitio.color || "#66bb6a", mb: 1 }}
+              sx={{ color: sitio.color || COLOR_DEFECTO, mb: 1 }}
             >
               Descripción
             </Typography>
@@ -127,7 +116,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || "#66bb6a",
+                  color: sitio.color || COLOR_DEFECTO,
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
@@ -136,16 +125,14 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                 <Hiking sx={{ mr: 1 }} />
                 Actividades Populares
               </Typography>
-              {sitio.actividades && sitio.actividades.map((act) => (
+              {sitio?.actividades.map((act) => (
                 <Chip
                   key={act.id}
                   label={act.nombre}
                   size="small"
+                  className={styles.chip_actividad}
                   sx={{
-                    mr: 1,
-                    mb: 1,
-                    backgroundColor: `${sitio.color || "#66bb6a"}20`,
-                    color: "#fff",
+                    backgroundColor: `${sitio.color || COLOR_DEFECTO}20`,
                   }}
                 />
               ))}
@@ -163,7 +150,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || "#66bb6a",
+                  color: sitio.color || COLOR_DEFECTO,
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
@@ -173,7 +160,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                 Galería
               </Typography>
               <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                {sitio.galeria && sitio.galeria.map((img, i) => (
+                {sitio?.galeria.map((img, i) => (
                   <Box
                     key={img.id}
                     component="img"
@@ -184,7 +171,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                       height: 80,
                       borderRadius: 1,
                       objectFit: "cover",
-                      border: `1px solid ${sitio.color || "#66bb6a"}40`,
+                      border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
                     }}
                   />
                 ))}
@@ -192,7 +179,6 @@ const InfoSitio = ({ sitio, open, onClose }) => {
             </Paper>
           </Grid>
 
-          {/* Información adicional */}
           <Grid size={{ xs: 12 }}>
             <Paper
               sx={{
@@ -205,7 +191,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || "#66bb6a",
+                  color: sitio.color || COLOR_DEFECTO,
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
@@ -214,13 +200,13 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                 <Timeline sx={{ mr: 1 }} />
                 Información Relevante
               </Typography>
-              <Typography variant="body2" sx={{ mb: 1 }}>
+              <Typography variant="body2" sx={{ mb: 1, color: '#fff', }}>
                 📍 Ubicación: {sitio.ubicacion}
               </Typography>
-              <Typography variant="body2" sx={{ mb: 1 }}>
+              <Typography variant="body2" sx={{ mb: 1, color: '#fff', }}>
                 🕒 Horario: {sitio.horario}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" sx={{color: '#fff',}}>
                 💰 Entrada: {sitio.precio}
               </Typography>
             </Paper>
@@ -232,7 +218,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || "#66bb6a",
+                  color: sitio.color || COLOR_DEFECTO,
                   mb: 1,
                   display: "flex",
                   alignItems: "center",
@@ -249,7 +235,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                   borderRadius: 4,
                   backgroundColor: "rgba(255,255,255,0.1)",
                   "& .MuiLinearProgress-bar": {
-                    backgroundColor: sitio.color || "#66bb6a",
+                    backgroundColor: sitio.color || COLOR_DEFECTO,
                   },
                 }}
               />
@@ -266,11 +252,11 @@ const InfoSitio = ({ sitio, open, onClose }) => {
         <Button
           variant="outlined"
           sx={{
-            borderColor: sitio.color || "#66bb6a",
-            color: sitio.color || "#66bb6a",
+            borderColor: sitio.color || COLOR_DEFECTO,
+            color: sitio.color || COLOR_DEFECTO,
             "&:hover": {
-              backgroundColor: `${sitio.color || "#66bb6a"}20`,
-              borderColor: sitio.color || "#66bb6a",
+              backgroundColor: `${sitio.color || COLOR_DEFECTO}20`,
+              borderColor: sitio.color || COLOR_DEFECTO,
             },
           }}
         >
@@ -279,9 +265,9 @@ const InfoSitio = ({ sitio, open, onClose }) => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: sitio.color || "#66bb6a",
+            backgroundColor: sitio.color || COLOR_DEFECTO,
             "&:hover": {
-              backgroundColor: sitio.color || "#66bb6a",
+              backgroundColor: sitio.color || COLOR_DEFECTO,
               filter: "brightness(0.9)",
             },
           }}

@@ -2,8 +2,7 @@ export const sitiosTuristicos = [
   {
     id: '1',
     nombre: 'Santa Bárbara',
-    categoria: 'Pueblo Patrimonio',
-    imagen: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop&q=60',
+    imagen: 'https://cdn.jsdelivr.net/gh/charlieyhs/rincones_boyaca_imagenes/lugares/santa_barbara.avif',
     descripcion: 'Encantador pueblo colonial ubicado en las montañas de Boyacá, conocido por su arquitectura bien conservada y sus calles empedradas. Un destino perfecto para quienes buscan conectarse con la historia y la naturaleza.',
     ubicacion: 'Santa Bárbara, Boyacá',
     horario: 'Lunes a Domingo: 8:00 AM - 6:00 PM',
@@ -23,12 +22,13 @@ export const sitiosTuristicos = [
     ],
     calificacion: 4.7,
     resenas: 128,
-    coords: [5.6513754, -74.1571872]
+    coords: [5.6513754, -74.1571872],
+    categoria: 'HISTORICO',
   },
   {
     id: '2',
     nombre: 'Otanche',
-    categoria: 'Aventura y Naturaleza',
+    categoria: 'NATURAL',
     imagen: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&auto=format&fit=crop&q=60',
     descripcion: 'Paraíso natural rodeado de cascadas, ríos cristalinos y bosques exuberantes. Ideal para los amantes del ecoturismo y las actividades al aire libre.',
     ubicacion: 'Otanche, Boyacá',
@@ -54,7 +54,7 @@ export const sitiosTuristicos = [
   {
     id: '3',
     nombre: 'San Martín',
-    categoria: 'Cultura y Tradición',
+    categoria: 'COLONIAL',
     imagen: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&auto=format&fit=crop&q=60',
     descripcion: 'Pueblo lleno de tradiciones culturales y festividades únicas. Conoce la rica historia y las costumbres ancestrales de esta región boyacense.',
     ubicacion: 'San Martín, Boyacá',
@@ -81,7 +81,7 @@ export const sitiosTuristicos = [
   {
     id: '4',
     nombre: 'Coscuez',
-    categoria: 'Miradores Naturales',
+    categoria: 'MONUMENTO',
     imagen: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=60',
     descripcion: 'Famosa por sus impresionantes miradores naturales que ofrecen vistas panorámicas de los valles y montañas de Boyacá. Un destino imperdible para los amantes de los paisajes.',
     ubicacion: 'Coscuez, Boyacá',
@@ -102,5 +102,5 @@ export const sitiosTuristicos = [
     calificacion: 4.8,
     resenas: 112,
     coords: [5.6260903, -74.1555653]
-  }
+  },
 ];
