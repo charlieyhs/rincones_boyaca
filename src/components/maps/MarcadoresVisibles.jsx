@@ -16,6 +16,6 @@ const MarcadoresVisibles = ({ sitios }) => {
   return null;
 };
 MarcadoresVisibles.propTypes = {
-  sitios: PropTypes.arrayOf().isRequired
+  sitios: PropTypes.array.isRequired
 }
 export default MarcadoresVisibles;

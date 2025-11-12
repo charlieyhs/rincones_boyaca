@@ -78,31 +78,33 @@ const InfoSitio = ({ sitio, open, onClose }) => {
 
       <DialogContent>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 12 }}>
-            <CardMedia
-              component="img"
-              image={sitio.imagen}
-              alt={sitio.nombre}
-              sx={{
-                height: 300,
-                borderRadius: 2,
-                mb: 2,
-                border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
-              }}
-            />
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <CardMedia
+                component="img"
+                image={sitio.imagen}
+                alt={sitio.nombre}
+                sx={{
+                  height: 300,
+                  borderRadius: 2,
+                  mb: 2,
+                  border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
+                }}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Typography
+                variant="h6"
+                sx={{ color: sitio.color || COLOR_DEFECTO, mb: 1 }}
+              >
+                Descripción
+              </Typography>
+              <Typography variant="body1" sx={{ lineHeight: 1.7, mb: 3 }}>
+                {sitio.descripcion}
+              </Typography>
+            </Grid>
           </Grid>
 
-          <Grid size={{ xs: 12 }}>
-            <Typography
-              variant="h6"
-              sx={{ color: sitio.color || COLOR_DEFECTO, mb: 1 }}
-            >
-              Descripción
-            </Typography>
-            <Typography variant="body1" sx={{ lineHeight: 1.7, mb: 3 }}>
-              {sitio.descripcion}
-            </Typography>
-          </Grid>
 
           {/* Actividades y fotos */}
           <Grid size={{ xs: 12, md: 6 }}>

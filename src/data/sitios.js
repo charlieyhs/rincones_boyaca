@@ -2,7 +2,7 @@ export const sitiosTuristicos = [
   {
     id: '1',
     nombre: 'Santa Bárbara',
-    imagen: 'https://cdn.jsdelivr.net/gh/charlieyhs/rincones_boyaca_imagenes/lugares/santa_barbara.avif',
+    imagen: 'https://raw.githubusercontent.com/charlieyhs/rincones_boyaca_imagenes/main/lugares/santa_barbara.avif',
     descripcion: 'Encantador pueblo colonial ubicado en las montañas de Boyacá, conocido por su arquitectura bien conservada y sus calles empedradas. Un destino perfecto para quienes buscan conectarse con la historia y la naturaleza.',
     ubicacion: 'Santa Bárbara, Boyacá',
     horario: 'Lunes a Domingo: 8:00 AM - 6:00 PM',
@@ -22,7 +22,7 @@ export const sitiosTuristicos = [
     ],
     calificacion: 4.7,
     resenas: 128,
-    coords: [5.6513754, -74.1571872],
+    coords: [5.652937580792047,-74.1565051674843],
     categoria: 'HISTORICO',
   },
   {
