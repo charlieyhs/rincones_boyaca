@@ -1,9 +1,12 @@
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
-import { colorMarcadorPosicion } from '../../utils/mapsUtil';
+import { colorMarcadorPosicion, marcadorPosicionActual } from '../../utils/mapsUtil';
 import MarcadoresVisibles from './MarcadoresVisibles';
 import PopupCard from './PopupCard';
 import styles from './mapa.module.css';
 import PropTypes from 'prop-types';
+import MapFooter from './MapFooter';
+import { useState } from 'react';
+import UbicacionActual from './UbicacionActual';
 
 const TILE_STYLES = {
   satellite: {
@@ -20,17 +23,19 @@ const TILE_STYLES = {
   }
 };
 
-const MapView = ({ mapStyle, sitios, onOpenInfo }) => {
+const MapView = ({ sitios, onOpenInfo }) => {
+  const [userLocation, setUserLocation] = useState(null);
+  const [mapStyle, setMapStyle] = useState('satellite');
+
   return (
     <div className={styles.mapa_wrapper}>
       <MapContainer
         center={[5.6513754, -74.1571872]}
         zoom={13}
         zoomControl={false}
-        scrollWheelZoom
       >
         <TileLayer {...TILE_STYLES[mapStyle]} />
-        <ZoomControl position="bottomright" />
+        <ZoomControl position="topright" />
         <MarcadoresVisibles sitios={sitios} />
 
         {sitios.map((sitio) => (
@@ -44,13 +49,30 @@ const MapView = ({ mapStyle, sitios, onOpenInfo }) => {
             </Popup>
           </Marker>
         ))}
+        {/* Marcador del usuario */}
+        {userLocation && (
+          <>
+            <UbicacionActual position={userLocation} />
+            <Marker
+              position={userLocation}
+              icon={marcadorPosicionActual()}
+            >
+              <Popup>Estás aquí</Popup>
+            </Marker>
+          </>
+        )}
       </MapContainer>
+
+      <MapFooter
+          mapStyle={mapStyle}
+          setMapStyle={setMapStyle}
+          setUserLocation={setUserLocation}
+        />
     </div>
   );
 };
 
 MapView.propTypes = {
-  mapStyle: PropTypes.oneOf(['satellite', 'street', 'smooth']).isRequired,
   sitios: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

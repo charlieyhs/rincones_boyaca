@@ -65,6 +65,7 @@ body {
   border-radius: 20px;
   animation: zoomIn 0.6s ease-out;
   transition: var(--transition-smooth);
+  z-index: 0;
 }
 
 @keyframes zoomIn {

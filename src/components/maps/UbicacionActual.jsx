@@ -1,23 +1,22 @@
+import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
-import L from 'leaflet';
 
-const UbicacionActual = () => {
+const UbicacionActual = ({position}) => {
   const map = useMap();
 
   useEffect(() => {
-    const latlng = { lat: 5.6513754, lng: -74.1571872 };
+    if(position){
+      map.flyTo(position, 12);
+    }
 
-    L.marker(latlng)
-        .addTo(map)
-        .bindPopup("📍 Inicias aquí")
-        .openPopup();
-
-    map.flyTo(latlng, 12);
-
-  }, [map]);
+  }, [position, map]);
 
   return null;
 }
+
+UbicacionActual.propTypes = {
+  position: PropTypes.array
+};
 
 export default UbicacionActual;

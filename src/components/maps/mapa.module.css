@@ -1,8 +1,6 @@
-/* ============================================ */
-/* CONTENEDOR PRINCIPAL */
-/* ============================================ */
 
 .mapContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -13,25 +11,22 @@
 }
 
 .mapa_wrapper {
+  position: relative;
   width: 100%;
   height: 600px;
+  min-height: 600px;
   border-radius: 25px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   border: 3px solid #1b5e20;
   animation: mapFadeIn 0.8s ease;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
 }
 
 @keyframes mapFadeIn {
   from { opacity: 0; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
 }
-
-/* ============================================ */
-/* BÚSQUEDA */
-/* ============================================ */
 
 .searchContainer {
   position: relative;
@@ -84,10 +79,6 @@
   transform: translateY(-50%) scale(1.1);
 }
 
-/* ============================================ */
-/* PANELES CON EFECTO GLASS */
-/* ============================================ */
-
 .glass_panel {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
@@ -98,15 +89,21 @@
   transition: all 0.3s ease;
   animation: slideInDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
+.map_footer {
+  position: absolute !important;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
 @keyframes slideInDown {
   from { transform: translateY(-100px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
-
-/* ============================================ */
-/* TOGGLE VISTA MAPA/LISTA */
-/* ============================================ */
 
 .viewToggle {
   display: flex;
@@ -139,10 +136,6 @@
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
 }
 
-/* ============================================ */
-/* BOTONES DE ESTILO DE MAPA */
-/* ============================================ */
-
 .mapButtonsContainer {
   display: flex;
   gap: 8px;
@@ -150,35 +143,20 @@
 }
 
 .map_button {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background: #e5e7eb;
-  color: #374151;
-  cursor: pointer;
-  font-weight: 600;
   font-size: 14px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
   overflow: hidden;
+  border: none;
+  background: transparent;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
-.map_button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(59, 130, 246, 0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-}
-
-.map_button:hover::after {
-  width: 200px;
-  height: 200px;
+.map_button:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .map_button.active {
@@ -194,9 +172,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ============================================ */
-/* FILTROS */
-/* ============================================ */
 
 .filterTitle {
   margin: 0 0 12px 0;
@@ -273,10 +248,6 @@
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-/* ============================================ */
-/* CONTADOR DE RESULTADOS */
-/* ============================================ */
-
 .resultsInfo {
   padding: 8px 16px;
   background: rgba(59, 130, 246, 0.1);
@@ -290,28 +261,14 @@
   color: #1f2937;
 }
 
-/* ============================================ */
-/* BOTÓN DE UBICACIÓN FLOTANTE */
-/* ============================================ */
-
 .locationButton {
-  position: absolute;
-  bottom: 80px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: white;
-  border: 2px solid #3b82f6;
-  color: #3b82f6;
-  font-size: 24px;
-  cursor: pointer;
+  background-color: #fff !important;
+  border: 2px solid #1e40af !important;
+  color: #1e40af !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.3s ease;
+  animation: slideInDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .locationButton:hover {
@@ -323,10 +280,6 @@
 .locationButton:active {
   transform: scale(0.95);
 }
-
-/* ============================================ */
-/* POPUP DE MAPA */
-/* ============================================ */
 
 .popupCard {
   padding: 0;
@@ -478,10 +431,6 @@
   color: #6b7280;
 }
 
-/* ============================================ */
-/* VISTA DE LISTA */
-/* ============================================ */
-
 .listView {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -605,9 +554,6 @@
   transform: translateY(-2px);
 }
 
-/* ============================================ */
-/* ESTADO VACÍO */
-/* ============================================ */
 
 .emptyState {
   text-align: center;
@@ -653,9 +599,6 @@
   box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
 }
 
-/* ============================================ */
-/* ACCESIBILIDAD */
-/* ============================================ */
 
 .srOnly {
   position: absolute;
@@ -668,10 +611,6 @@
   white-space: nowrap;
   border-width: 0;
 }
-
-/* ============================================ */
-/* RESPONSIVE */
-/* ============================================ */
 
 @media (max-width: 768px) {
   .mapContainer {
@@ -702,6 +641,7 @@
     width: 45px;
     height: 45px;
     font-size: 20px;
+    background: #fff;
   }
 
   .listView {

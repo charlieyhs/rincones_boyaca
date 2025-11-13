@@ -14,7 +14,6 @@ export const colorsList = Object.entries(colors).map(([id, color]) => ({
   color
 }));
 
-// Iconos SVG mejorados con mejor diseño
 export function colorMarcadorPosicion(categoria) {
   const color = colors[categoria] || '#6366f1';
   
@@ -58,6 +57,28 @@ export function colorMarcadorPosicion(categoria) {
     iconSize: [40, 50],
     iconAnchor: [20, 50],
     popupAnchor: [0, -50]
+  });
+}
+
+export function marcadorPosicionActual() {  
+  const svgIcon = `
+    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+      <!-- Onda exterior animada -->
+      <circle cx="25" cy="25" r="10" fill="rgba(59,130,246,0.25)">
+        <animate attributeName="r" from="10" to="20" dur="1.5s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
+      </circle>
+      
+      <!-- Punto principal -->
+      <circle cx="25" cy="25" r="8" fill="#3b82f6" stroke="white" stroke-width="2"/>
+    </svg>
+  `;
+  
+  return new L.DivIcon({
+    html: svgIcon,
+    className: 'user-location-icon',
+    iconSize: [50, 50],
+    iconAnchor: [25, 25],
   });
 }
 
