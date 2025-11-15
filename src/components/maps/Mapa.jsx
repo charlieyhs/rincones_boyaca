@@ -1,39 +1,20 @@
-import { useState, useMemo, useCallback } from 'react';
-import { sitiosTuristicos } from '../../data/sitios';
-import { colorsList } from '../../utils/mapsUtil';
-import InfoSitio from '../dialogs/infoSitio/InfoSitio';
-import MapFilters from './MapFilters';
-import MapView from './MapView';
-import styles from './mapa.module.css';
-import { InputAdornment, TextField } from '@mui/material';
-import { Search } from '@mui/icons-material';
-import CartasLugares from './CartasLugares';
+import { useState, useCallback } from "react";
+import MapFilters from "./MapFilters";
+import MapView from "./MapView";
+import CartasLugares from "./CartasLugares";
+import styles from "./mapa.module.css";
+import InfoSitio from "./dialogs/InfoSitio";
+import { useMapFilters } from "../../hooks/useMapFilters";
+import { MapFiltersProvider } from "../../providers/MapFiltersProvider";
+import { Button } from "@mui/material";
+import { List, Map } from "@mui/icons-material";
 
-function Mapa() {
+function MapaCore() {
+  const { sitiosFiltrados } = useMapFilters();
+
   const [openInfoSitio, setOpenInfoSitio] = useState(false);
   const [sitio, setSitio] = useState(null);
-  const [filtroCategoria, setFiltroCategoria] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState('map'); // 'map' | 'list'
-  
-
-  const sitiosFiltrados = useMemo(() => {
-    let filtered = sitiosTuristicos;
-    
-    if (filtroCategoria) {
-      filtered = filtered.filter(s => s.categoria === filtroCategoria);
-    }
-    
-    if (searchTerm) {
-      filtered = filtered.filter(s =>
-        s.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        s.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        s.ubicacion.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    
-    return filtered;
-  }, [filtroCategoria, searchTerm]);
+  const [viewMode, setViewMode] = useState("map");
 
   const handleOpenInfoSitio = useCallback((sitio) => {
     setSitio(sitio);
@@ -44,107 +25,45 @@ function Mapa() {
     setOpenInfoSitio(false);
   }, []);
 
-  const toggleFiltro = useCallback((categoria) => {
-    setFiltroCategoria(prev => prev === categoria ? null : categoria);
-  }, []);
-
   return (
     <div className={styles.mapContainer}>
-      {/* Barra de búsqueda */}
-      <div className={styles.searchContainer}>
-        <TextField
-          color='success'
-          className={styles.searchInput}
-          aria-label="Buscar sitios turísticos"
-          placeholder="Buscar sitios turísticos..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          slotProps={
-            {
-              input:{
-                  startAdornment: (
-                      <InputAdornment position="start">
-                          <Search/>
-                      </InputAdornment>
-                  ),
-              },
-            }
-          }/>
-        {searchTerm && (
-          <button 
-            onClick={() => setSearchTerm('')}
-            className={styles.clearSearch}
-            aria-label="Limpiar búsqueda"
-          >
-            ✕
-          </button>
-        )}
-      </div>
+      
+      <MapFilters />
 
-      {/* Filtros y controles superiores */}
-      <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px'}}>
-        <MapFilters
-          colorsList={colorsList}
-          filtroCategoria={filtroCategoria}
-          toggleFiltro={toggleFiltro}
-          totalSitios={sitiosTuristicos}
-        />
+      <main style={{flex: 1}}>
+        <div className={styles.header_main}>
+          {/* Contador */}
+          <p className={styles.resultsCount}>
+            {sitiosFiltrados.length} sitios encontrados
+          </p>
 
-        <div style={{display: 'flex', gap: '12px'}}>
-          <div className={`${styles.glass_panel} ${styles.viewToggle}`}>
-            <button
-              onClick={() => setViewMode('map')}
-              className={`${styles.view_button} ${viewMode === 'map' ? styles.active : ''}`}
-              aria-pressed={viewMode === 'map'}
-              aria-label="Vista de mapa"
+          {/* Switch vista */}
+          <div style={{display: 'flex', gap: '5px'}}>
+            <Button
+              onClick={() => setViewMode("map")}
+              aria-label="Vista mapa"
+              startIcon={<Map />}
+              className={`${styles.view_button} ${viewMode === "map" ? styles.active : ""}`}>
+                Mapa
+            </Button>
+
+            <Button
+              onClick={() => setViewMode("list")}
+              startIcon={<List/>}
+              className={`${styles.view_button} ${viewMode === "list" ? styles.active : ""}`}
             >
-              🗺️ Mapa
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`${styles.view_button} ${viewMode === 'list' ? styles.active : ''}`}
-              aria-pressed={viewMode === 'list'}
-              aria-label="Vista de lista"
-            >
-              📋 Lista
-            </button>
+              Lista
+            </Button>
           </div>
         </div>
-      </div>
 
-      {/* Contador de resultados */}
-      <div className={styles.resultsInfo}>
-        <span className={styles.resultsCount}>
-          {sitiosFiltrados.length} {sitiosFiltrados.length === 1 ? 'sitio' : 'sitios'}
-          {filtroCategoria && ' en esta categoría'}
-          {searchTerm && ' encontrados'}
-        </span>
-      </div>
-
-      {/* Vista condicional: Mapa o Lista */}
-      {viewMode === 'map' ? (
-        <MapView
-          sitios={sitiosFiltrados}
-          onOpenInfo={handleOpenInfoSitio}
-        />
-      ) : (
-        <CartasLugares
-          sitiosFiltrados={sitiosFiltrados}
-          setFiltroCategoria={setFiltroCategoria}
-          setSearchTerm={setSearchTerm}
-          handleOpenInfoSitio={handleOpenInfoSitio}
-        />
-      )}
-
-      {/* Anuncio para lectores de pantalla */}
-      <div 
-        aria-live="polite" 
-        aria-atomic="true" 
-        className={styles.srOnly}
-      >
-        {sitiosFiltrados.length} sitios mostrados
-      </div>
-
+        {/* Mapa o lista */}
+        {viewMode === "map" ? (
+          <MapView sitios={sitiosFiltrados} onOpenInfo={handleOpenInfoSitio} />
+        ) : (
+          <CartasLugares sitiosFiltrados={sitiosFiltrados} handleOpenInfoSitio={handleOpenInfoSitio} />
+        )}
+      </main>
       {openInfoSitio && (
         <InfoSitio
           open={openInfoSitio}
@@ -156,4 +75,10 @@ function Mapa() {
   );
 }
 
-export default Mapa;
+export default function Mapa() {
+  return (
+    <MapFiltersProvider>
+      <MapaCore />
+    </MapFiltersProvider>
+  );
+}

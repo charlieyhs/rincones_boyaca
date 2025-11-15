@@ -81,30 +81,3 @@ export function marcadorPosicionActual() {
     iconAnchor: [25, 25],
   });
 }
-
-// Función para obtener ícono según categoría
-export function getIconoCategoria(categoria) {
-  const iconos = {
-    HISTORICO: '🏛️',
-    MONUMENTO: '🗿',
-    COLONIAL: '🏰',
-    NATURAL: '🌳'
-  };
-  return iconos[categoria] || '📍';
-}
-
-// Función para formatear descripción corta
-export function truncateText(text, maxLength = 100) {
-  if (text.length <= maxLength) return text;
-  return text.substring(0, maxLength) + '...';
-}
-
-// Función para calcular centro del mapa basado en sitios
-export function calcularCentroMapa(sitios) {
-  if (sitios.length === 0) return [5.6513754, -74.1571872];
-  
-  const sumLat = sitios.reduce((sum, s) => sum + s.coords[0], 0);
-  const sumLng = sitios.reduce((sum, s) => sum + s.coords[1], 0);
-  
-  return [sumLat / sitios.length, sumLng / sitios.length];
-}
