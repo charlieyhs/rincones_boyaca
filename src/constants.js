@@ -1,1 +1,1 @@
-export const VERDE_BOYACA_LIGHT = "#2e7d32"
+export const VERDE_BOYACA = "#1b5e20"

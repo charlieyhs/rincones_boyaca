@@ -56,9 +56,7 @@ const MapView = ({ sitios, onOpenInfo }) => {
             <Marker
               position={userLocation}
               icon={marcadorPosicionActual()}
-            >
-              <Popup>Estás aquí</Popup>
-            </Marker>
+            />
           </>
         )}
       </MapContainer>

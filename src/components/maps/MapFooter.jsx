@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import styles from './mapa.module.css';
 import { IconButton } from '@mui/material';
 import { useCallback } from 'react';
-import { MyLocation } from '@mui/icons-material';
+import { Circle, MyLocation } from '@mui/icons-material';
+import { coloresCategorias } from '../../utils/mapsUtil';
 
 const MapFooter = ({ mapStyle, setMapStyle, setUserLocation }) => {
   
@@ -33,6 +34,15 @@ const MapFooter = ({ mapStyle, setMapStyle, setUserLocation }) => {
 
   return (
     <div className={styles.map_footer}>
+      <div className={styles.glass_panel} style={{padding: '10px', position: 'absolute', left: '5px', bottom: 0}}>
+        {coloresCategorias.map(({ color, id, label }) => (
+          <div key={id} style={{display: 'flex', gap: '5px'}}>
+            <Circle sx={{color,}}/>
+            <p style={{color,}}>{label}</p>
+          </div>
+        ))}
+      </div>
+
       <div className={`${styles.glass_panel} ${styles.mapButtonsContainer}`}>
         {mapModes.map(({ id, label }) => (
           <button

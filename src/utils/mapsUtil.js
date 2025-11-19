@@ -8,7 +8,7 @@ export const colors = {
   NATURAL: '#f59e0b'
 };
 
-export const colorsList = Object.entries(colors).map(([id, color]) => ({
+export const coloresCategorias = Object.entries(colors).map(([id, color]) => ({
   id,
   label: id.charAt(0) + id.slice(1).toLowerCase(),
   color

@@ -1,16 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { MapFiltersContext } from "../context/MapFiltersContext";
 import PropTypes from "prop-types";
 import { sitiosTuristicos } from "../data/sitios";
-import { colorsList } from "../utils/mapsUtil";
+import { coloresCategorias } from "../utils/mapsUtil";
 
 export function MapFiltersProvider({ children }) {
   const [filtroCategoria, setFiltroCategoria] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const toggleFiltro = useCallback((categoria) => {
-    setFiltroCategoria((prev) => (prev === categoria ? null : categoria));
-  }, []);
 
   const sitiosFiltrados = useMemo(() => {
     let filtered = sitiosTuristicos;
@@ -30,16 +26,15 @@ export function MapFiltersProvider({ children }) {
   }, [filtroCategoria, searchTerm]);
   
   const value = useMemo(() => ({
-    colorsList,
+    coloresCategorias,
     filtroCategoria,
-    toggleFiltro,
+    setFiltroCategoria,
     searchTerm,
     setSearchTerm,
     sitiosFiltrados,
     totalSitios: sitiosTuristicos
 }), [
     filtroCategoria,
-    toggleFiltro,
     searchTerm,
     sitiosFiltrados
 ]);
