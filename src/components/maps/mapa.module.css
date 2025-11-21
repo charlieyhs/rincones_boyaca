@@ -31,7 +31,7 @@
   border-bottom: 1px solid #dbe0e6;
 }
 
-.filtros_float_button {
+.boton_filtros {
   background: white;
   border: 1px solid #ddd;
   box-shadow: 0px 2px 8px rgba(0,0,0,.2);
@@ -238,6 +238,11 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.wraper_checkbox{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
 }
 
 .categoryIcon {
@@ -455,7 +460,6 @@
 .listCard {
   background: white;
   border-radius: var(--border-radius-lg);
-  overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: all var(--transition-smooth);
   cursor: pointer;
@@ -594,53 +598,149 @@
   color: #6b7280;
 }
 
+@media (max-width: 1024px) {
+  .wraper_checkbox{
+    grid-template-columns: 1fr;
+  }
+  .mapa_wrapper {
+    height: 500px;
+    min-height: 500px;
+  }
+  
+  .sidebar {
+    width: 200px;
+  }
+  
+  .listView.shifted {
+    margin-left: 250px;
+  }
+}
 
 @media (max-width: 768px) {
   :root {
-    --sidebar-width: 100%;
+    --header-height: 57px;
   }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    z-index: 9999;
+  .header_main {
+    padding: 8px;
+    gap: 8px;
   }
-
-  .sidebar::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--transition-normal);
+  
+  .mapa_wrapper {
+    height: 400px;
+    min-height: 400px;
   }
-
-  .sidebar:not(.close)::before {
-    opacity: 1;
-    pointer-events: all;
-  }
-
+  
   .listView {
     grid-template-columns: 1fr;
-    padding: 8px;
+    margin-left: 0 !important;
+  }
+  
+  .map_footer {
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    transform: none;
+    width: auto;
+  }
+  
+  .mapButtonsContainer {
+    padding: 6px !important;
+    gap: 4px;
+  }
+  
+  .map_button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .locationButton {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .glass_panel:first-child {
+    display: none;
+  }
+  .boton_filtros{
+    width: 40px;
   }
 }
 
 @media (max-width: 480px) {
+  .header_main {
+    gap: 3px;
+  }
+  
+  .header_main > * {
+    justify-content: center;
+  }
+  
+  .mapa_wrapper {
+    height: 350px;
+    min-height: 350px;
+  }
+  
+  .listCard {
+    margin: 4px;
+  }
+  
+  .listCardImage {
+    height: 150px;
+  }
+  
+  .listCardContent {
+    padding: 12px;
+  }
+  
+  .listCardTitle {
+    font-size: 16px;
+  }
+  
   .popupCard {
-    min-width: 240px;
+    min-width: 200px;
   }
-
+  
   .popupImage {
-    height: 120px;
+    height: 100px;
   }
-
+  
+  .popupTitle {
+    font-size: 15px;
+  }
+  
+  .mapButtonsContainer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .map_button {
+    flex: 1;
+    min-width: 70px;
+    text-align: center;
+  }
 }
 
+@media (max-width: 360px) {
+  .mapa_wrapper {
+    height: 300px;
+    min-height: 300px;
+  }
+  
+  .listView {
+    padding: 4px;
+    gap: 8px;
+  }
+  
+  .map_button {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .mapa_wrapper {
+    height: 250px;
+    min-height: 250px;
+  }
+  
+}

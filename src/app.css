@@ -113,17 +113,71 @@ body {
   margin-bottom: 2px !important;
 }
 
+@media (max-width: 1024px) {
+  .app-header {
+    font-size: 1.8rem;
+    padding: 1.2rem;
+  }
+  
+  .leaflet-container {
+    height: 70vh;
+  }
+}
+
 @media (max-width: 768px) {
   .app-header {
-    font-size: 1.5rem;
-    padding: 1rem;
+    font-size: 1.4rem;
+    padding: 1rem 0.8rem;
   }
-  .app-content {
-    padding: 1rem;
+  
+  .app-header p {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
   }
+  
   .leaflet-container {
-    width: 95vw;
-    height: 65vh;
-    border-radius: 12px;
+    height: 60vh;
+    width: 100vw;
+    border-radius: 0;
+  }
+  
+  .app-content {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .listView {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 768px) {
+  .map_button, .listCard, .popup_button {
+    min-height: 44px; /* Tamaño mínimo para touch */
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    font-size: 1.2rem;
+    padding: 0.8rem 0.5rem;
+  }
+  
+  .leaflet-container {
+    height: 55vh;
+  }
+}
+
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .leaflet-container {
+    height: 75vh;
   }
 }

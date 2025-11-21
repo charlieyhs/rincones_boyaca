@@ -1,5 +1,5 @@
 import styles from "./InfoSito.module.css"
-import { CameraAlt, Close, Hiking, Star, Timeline } from "@mui/icons-material";
+import { CameraAlt, Close, Hiking, MonetizationOn, PushPin, Star, Timeline, WatchLater } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -29,6 +29,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
       fullWidth
       slots={{ transition: Zoom }}
       transitionDuration={400}
+      fullScreen={window.innerWidth <= 768}
       slotProps={{
         paper: {
           sx: {
@@ -202,14 +203,14 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                 <Timeline sx={{ mr: 1 }} />
                 Información Relevante
               </Typography>
-              <Typography variant="body2" sx={{ mb: 1, color: '#fff', }}>
-                📍 Ubicación: {sitio.ubicacion}
+              <Typography variant="body2" sx={{ mb: 1, color: '#fff', display: 'flex', alignItems: 'center', gap: '5px',}}>
+                <PushPin sx={{color: '#f43d72', }}/>  Ubicación: {sitio.ubicacion}
               </Typography>
-              <Typography variant="body2" sx={{ mb: 1, color: '#fff', }}>
-                🕒 Horario: {sitio.horario}
+              <Typography variant="body2" sx={{ mb: 1, color: '#fff', display: 'flex', alignItems: 'center', gap: '5px',}}>
+                <WatchLater /> Horario: {sitio.horario}
               </Typography>
-              <Typography variant="body2" sx={{color: '#fff',}}>
-                💰 Entrada: {sitio.precio}
+              <Typography variant="body2" sx={{color: '#fff', display: 'flex', alignItems: 'center', gap: '5px',}}>
+                <MonetizationOn sx={{color: '#eb974a'}} />  Entrada: {sitio.precio}
               </Typography>
             </Paper>
           </Grid>

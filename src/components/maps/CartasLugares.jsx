@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './mapa.module.css'
-import { MonetizationOn, PushPin, Star } from '@mui/icons-material';
+import { MonetizationOn, PushPin, Star, Warning } from '@mui/icons-material';
 
 const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
 
@@ -8,7 +8,7 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
       <div className={`${styles.listView} ${openFilters ? styles.shifted : ''}`}>
         {sitiosFiltrados.length === 0 ? (
           <div className={styles.emptyState}>
-            <div className={styles.emptyIcon}>🔍</div>
+            <div className={styles.emptyIcon}><Warning /></div>
             <h3>No se encontraron sitios</h3>
             <p>Intenta con otra búsqueda o filtro diferente</p>
           </div>
@@ -23,6 +23,7 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
                 src={sitio.imagen} 
                 alt={sitio.nombre}
                 className={styles.listCardImage}
+                loading="lazy" // Mejorar performance en móviles
               />
               <div className={styles.listCardContent}>
                 <div className={styles.listCardHeader}>
@@ -38,12 +39,18 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
                   </div>
                 </div>
                 <h3 className={styles.listCardTitle}>{sitio.nombre}</h3>
-                <p className={styles.listCardLocation}><PushPin sx={{color: '#f43d72'}}/> {sitio.ubicacion}</p>
+                <p className={styles.listCardLocation}>
+                  <PushPin sx={{color: '#f43d72', fontSize: '1rem'}}/> 
+                  {sitio.ubicacion}
+                </p>
                 <p className={styles.listCardDescription}>
                   {sitio.descripcion.substring(0, 120)}...
                 </p>
                 <div className={styles.listCardFooter}>
-                  <span className={styles.listCardPrice}><MonetizationOn sx={{color: '#eb974a'}} /> {sitio.precio}</span>
+                  <span className={styles.listCardPrice}>
+                    <MonetizationOn sx={{color: '#eb974a'}} /> 
+                    {sitio.precio}
+                  </span>
                 </div>
               </div>
             </button>
@@ -56,7 +63,7 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
 CartasLugares.propTypes = {
     openFilters: PropTypes.bool,
     sitiosFiltrados: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         nombre: PropTypes.string.isRequired,
         categoria: PropTypes.string.isRequired,
         color: PropTypes.string,

@@ -1,5 +1,6 @@
-import { CleaningServices, ExpandMore, Search } from "@mui/icons-material";
-import { Accordion, 
+import { CleaningServices, ExpandMore, Search } from "@mui/icons-material"; 
+import { 
+  Accordion, 
   AccordionDetails, 
   AccordionSummary, 
   Button, 
@@ -8,7 +9,9 @@ import { Accordion,
   FormGroup,
   InputAdornment, 
   TextField, 
-  Typography, 
+  Typography,
+  useTheme,
+  useMediaQuery
 } from "@mui/material";
 import { useMapFilters } from "../../hooks/useMapFilters";
 import styles from "./mapa.module.css";
@@ -17,18 +20,20 @@ import { useState } from "react";
 import { coloresCategorias } from "../../utils/mapsUtil";
 import PropTypes from "prop-types";
 
-const MapFilters = ({open}) => {
+const MapFilters = ({ open, onClose }) => {
 
   const {aplicarFiltros, limpiarFiltros} = useMapFilters();
   const [textoBusqueda, setTextoBusqueda] = useState('');
   const [categorias, setCategorias] = useState([]);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleChangeCategoria = (id) => {
     setCategorias((prev) => 
       prev.includes(id) 
         ? prev.filter((x) => x !== id)
         : [...prev, id]
-
     );
   };
 
@@ -38,16 +43,20 @@ const MapFilters = ({open}) => {
       categorias
     };
     aplicarFiltros(filtros);
+    if (isMobile) {
+      onClose();
+    }
   };
+
   const handleLimpiarFiltros = () => {
     setTextoBusqueda('');
-    setCategorias([])
+    setCategorias([]);
     limpiarFiltros();
   };
 
   return (
     <aside className={`${styles.sidebar} ${open ? '' : styles.close}`}>
-      
+      <h4 style={{marginBottom: '5px'}}>Filtros</h4>
       <div className={styles.searchContainer}>
         {/* Buscador */}
         <TextField
@@ -56,7 +65,12 @@ const MapFilters = ({open}) => {
           value={textoBusqueda}
           color="success"
           onChange={(e) => setTextoBusqueda(e.target.value)}
-          sx={{mb: '8px'}}
+          sx={{
+            mb: '8px',
+            "& .MuiInputBase-input": {
+              padding: '5px',
+            }
+          }}
           slotProps={{
             input: {
               startAdornment: (
@@ -83,29 +97,39 @@ const MapFilters = ({open}) => {
           <AccordionSummary
             expandIcon={<ExpandMore/>}
             aria-controls="panel1-content"
-            id="panel1-header">
+            id="panel1-header"
+            sx={{
+    		      minHeight: 0,
+		          padding: '4px 0',
+		          '& .MuiAccordionSummary-content': {
+		          margin: 0,
+		        },
+	        }}>
               <Typography component="span">Categorias</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails
+            sx={{
+              pt: 0,
+            }}
+          >
             {/* Categorías */}
             <div className={styles.filter_container}>
-              <FormGroup
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                }}
-              >
+              <FormGroup className={styles.wraper_checkbox}>
                 {coloresCategorias.map((cat) => {
                   return (
                     <FormControlLabel 
+                      sx={{
+                          margin: 0,
+                          padding: 0,
+                      }}
                       key={cat.id}
                       control={<Checkbox
                           checked={categorias.includes(cat.id)}
                           onChange={() => handleChangeCategoria(cat.id)}
-                          style={{
+                          sx={{
                             borderColor: cat.color,
                             color: cat.color,
+                            padding: '2px',
                           }}
                         />}
                       label={cat.label}
@@ -119,31 +143,32 @@ const MapFilters = ({open}) => {
         
       </div>
       
-
       <div className={styles.footer_filtros}>
         <Button
-          onClick={() => handleAplicarFiltros()}
+          onClick={handleAplicarFiltros}
           color="success"
           aria-label="Buscando resultados"
           startIcon={<Search />}
           variant="contained">
-            Aplicar filtros
+            Aplicar
         </Button>
 
         <Button
-          onClick={() => handleLimpiarFiltros()}
+          onClick={handleLimpiarFiltros}
           aria-label="Limpiar filtros"
           startIcon={<CleaningServices />}
           variant="outlined"
           sx={{borderColor: VERDE_BOYACA, color: VERDE_BOYACA}}>
-            Limpiar filtros
+            Limpiar
         </Button>
-        
       </div>
     </aside>
   );
 };
+
 MapFilters.propTypes = {
   open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired, // Agregar onClose a propTypes
 };
+
 export default MapFilters;
