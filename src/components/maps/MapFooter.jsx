@@ -34,7 +34,7 @@ const MapFooter = ({ mapStyle, setMapStyle, setUserLocation }) => {
 
   return (
     <div className={styles.map_footer}>
-      <div className={styles.glass_panel} style={{padding: '10px', position: 'absolute', left: '5px', bottom: 0}}>
+      <div className={styles.glass_panel} style={{padding: '10px', position: 'absolute', right: '5px', bottom: 0}}>
         {coloresCategorias.map(({ color, id, label }) => (
           <div key={id} style={{display: 'flex', gap: '5px'}}>
             <Circle sx={{color,}}/>

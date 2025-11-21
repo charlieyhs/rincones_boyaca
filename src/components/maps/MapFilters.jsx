@@ -1,42 +1,61 @@
-import { CleaningServices, ExpandMore, MenuOpen, Search } from "@mui/icons-material";
+import { CleaningServices, ExpandMore, Search } from "@mui/icons-material";
 import { Accordion, 
   AccordionDetails, 
   AccordionSummary, 
   Button, 
   Checkbox, 
   FormControlLabel, 
-  FormGroup, 
-  IconButton, 
+  FormGroup,
   InputAdornment, 
   TextField, 
-  Typography } from "@mui/material";
+  Typography, 
+} from "@mui/material";
 import { useMapFilters } from "../../hooks/useMapFilters";
 import styles from "./mapa.module.css";
 import { VERDE_BOYACA } from "../../constants";
+import { useState } from "react";
+import { coloresCategorias } from "../../utils/mapsUtil";
+import PropTypes from "prop-types";
 
-const MapFilters = () => {
-  const {
-    coloresCategorias,
-    searchTerm,
-    setSearchTerm,
-  } = useMapFilters();
+const MapFilters = ({open}) => {
+
+  const {aplicarFiltros, limpiarFiltros} = useMapFilters();
+  const [textoBusqueda, setTextoBusqueda] = useState('');
+  const [categorias, setCategorias] = useState([]);
+
+  const handleChangeCategoria = (id) => {
+    setCategorias((prev) => 
+      prev.includes(id) 
+        ? prev.filter((x) => x !== id)
+        : [...prev, id]
+
+    );
+  };
+
+  const handleAplicarFiltros = () => {
+    const filtros = {
+      textoBusqueda,
+      categorias
+    };
+    aplicarFiltros(filtros);
+  };
+  const handleLimpiarFiltros = () => {
+    setTextoBusqueda('');
+    setCategorias([])
+    limpiarFiltros();
+  };
 
   return (
-    <aside className={styles.contenedor_filtros}>
-      <div className={styles.header_filtros}>
-        <h3>Filtros</h3>
-        <IconButton style={{padding: '6px 8px'}}>
-          <MenuOpen />
-        </IconButton>
-      </div>
+    <aside className={`${styles.sidebar} ${open ? '' : styles.close}`}>
+      
       <div className={styles.searchContainer}>
         {/* Buscador */}
-        
         <TextField
           className={styles.searchInput}
           placeholder="Buscar sitios turísticos..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={textoBusqueda}
+          color="success"
+          onChange={(e) => setTextoBusqueda(e.target.value)}
           sx={{mb: '8px'}}
           slotProps={{
             input: {
@@ -82,6 +101,8 @@ const MapFilters = () => {
                     <FormControlLabel 
                       key={cat.id}
                       control={<Checkbox
+                          checked={categorias.includes(cat.id)}
+                          onChange={() => handleChangeCategoria(cat.id)}
                           style={{
                             borderColor: cat.color,
                             color: cat.color,
@@ -95,12 +116,13 @@ const MapFilters = () => {
             </div>
           </AccordionDetails>
         </Accordion>
+        
       </div>
       
 
       <div className={styles.footer_filtros}>
         <Button
-          onClick={() => console.log('Buscando...')}
+          onClick={() => handleAplicarFiltros()}
           color="success"
           aria-label="Buscando resultados"
           startIcon={<Search />}
@@ -109,17 +131,19 @@ const MapFilters = () => {
         </Button>
 
         <Button
-          onClick={() => console.log('Limpiando...')}
-          aria-label="Buscando resultados"
+          onClick={() => handleLimpiarFiltros()}
+          aria-label="Limpiar filtros"
           startIcon={<CleaningServices />}
           variant="outlined"
           sx={{borderColor: VERDE_BOYACA, color: VERDE_BOYACA}}>
             Limpiar filtros
         </Button>
-
+        
       </div>
     </aside>
   );
 };
-
+MapFilters.propTypes = {
+  open: PropTypes.bool.isRequired,
+};
 export default MapFilters;

@@ -6,8 +6,8 @@ import styles from "./mapa.module.css";
 import InfoSitio from "./dialogs/InfoSitio";
 import { useMapFilters } from "../../hooks/useMapFilters";
 import { MapFiltersProvider } from "../../providers/MapFiltersProvider";
-import { Button } from "@mui/material";
-import { List, Map } from "@mui/icons-material";
+import { Button, IconButton} from "@mui/material";
+import { List, Map, MenuOpen } from "@mui/icons-material";
 
 function MapaCore() {
   const { sitiosFiltrados } = useMapFilters();
@@ -15,6 +15,7 @@ function MapaCore() {
   const [openInfoSitio, setOpenInfoSitio] = useState(false);
   const [sitio, setSitio] = useState(null);
   const [viewMode, setViewMode] = useState("map");
+  const [openFilters, setOpenFilters] = useState(false);
 
   const handleOpenInfoSitio = useCallback((sitio) => {
     setSitio(sitio);
@@ -28,42 +29,51 @@ function MapaCore() {
   return (
     <div className={styles.mapContainer}>
       
-      <MapFilters />
+      <div className={styles.header_main}>
+        <IconButton
+          title="Filtros"
+          className={styles.filtros_float_button}
+          onClick={() => setOpenFilters(!openFilters)}
+        >
+          <MenuOpen />
+        </IconButton>
 
-      <main style={{flex: 1}}>
-        <div className={styles.header_main}>
-          {/* Contador */}
-          <p className={styles.resultsCount}>
-            {sitiosFiltrados.length} sitios encontrados
-          </p>
+        {/* Contador */}
+        <p className={styles.resultsCount}>
+          {sitiosFiltrados.length} sitios encontrados
+        </p>
 
-          {/* Switch vista */}
-          <div style={{display: 'flex', gap: '5px'}}>
-            <Button
-              onClick={() => setViewMode("map")}
-              aria-label="Vista mapa"
-              startIcon={<Map />}
-              className={`${styles.view_button} ${viewMode === "map" ? styles.active : ""}`}>
-                Mapa
-            </Button>
+        {/* Switch vista */}
+        <div style={{display: 'flex', gap: '5px'}}>
+          <Button
+            onClick={() => setViewMode("map")}
+            aria-label="Vista mapa"
+            startIcon={<Map />}
+            color="success"
+            variant={viewMode === "map" ? "contained" : "outlined"}>
+              Mapa
+          </Button>
 
-            <Button
-              onClick={() => setViewMode("list")}
-              startIcon={<List/>}
-              className={`${styles.view_button} ${viewMode === "list" ? styles.active : ""}`}
-            >
-              Lista
-            </Button>
-          </div>
+          <Button
+            onClick={() => setViewMode("list")}
+            startIcon={<List/>}
+            color="success"
+            variant={viewMode === "list" ? "contained" : "outlined"}
+          >
+            Lista
+          </Button>
         </div>
+      </div>
 
-        {/* Mapa o lista */}
-        {viewMode === "map" ? (
-          <MapView sitios={sitiosFiltrados} onOpenInfo={handleOpenInfoSitio} />
-        ) : (
-          <CartasLugares sitiosFiltrados={sitiosFiltrados} handleOpenInfoSitio={handleOpenInfoSitio} />
-        )}
-      </main>
+      <MapFilters open={openFilters} />
+
+      {/* Mapa o lista */}
+      {viewMode === "map" ? (
+        <MapView sitios={sitiosFiltrados} onOpenInfo={handleOpenInfoSitio} />
+      ) : (
+        <CartasLugares openFilters={openFilters} sitiosFiltrados={sitiosFiltrados} handleOpenInfoSitio={handleOpenInfoSitio} />
+      )}
+      
       {openInfoSitio && (
         <InfoSitio
           open={openInfoSitio}
