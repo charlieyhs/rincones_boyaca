@@ -1,0 +1,11 @@
+.titulo_dialogo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+}
+.chip_actividad {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    color: #fff !important;
+}
