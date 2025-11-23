@@ -10,17 +10,18 @@ import UbicacionActual from './UbicacionActual';
 
 const TILE_STYLES = {
   satellite: {
-    url: "https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.jpg",
-    attribution: '&copy; Stadia Maps'
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution: '&copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community'
   },
   street: {
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution: '&copy; OpenStreetMap'
+    url: "https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+    attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team'
   },
-  smooth: {
-    url: "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
-    attribution: '&copy; Stadia Maps'
+    smooth: {
+    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    attribution: '© OpenStreetMap contributors © CARTO'
   }
+
 };
 
 const MapView = ({ sitios, onOpenInfo }) => {

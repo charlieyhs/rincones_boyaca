@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"; // Agregar useEffect
+import { useState, useCallback } from "react";
 import MapFilters from "./MapFilters";
 import MapView from "./MapView";
 import CartasLugares from "./CartasLugares";
