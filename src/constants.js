@@ -1,0 +1,1 @@
+export const VERDE_BOYACA = "#1b5e20"
