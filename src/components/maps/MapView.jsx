@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import MapFooter from './MapFooter';
 import { useState } from 'react';
 import UbicacionActual from './UbicacionActual';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material';
 
 const TILE_STYLES = {
   satellite: {
@@ -27,6 +29,10 @@ const TILE_STYLES = {
 const MapView = ({ sitios, onOpenInfo }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [mapStyle, setMapStyle] = useState('satellite');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isLandscape = useMediaQuery("(orientation: landscape)");
+  const ejecutarOpenInfo = isMobile || isLandscape;
 
   return (
     <div className={styles.mapa_wrapper}>
@@ -44,10 +50,19 @@ const MapView = ({ sitios, onOpenInfo }) => {
             key={sitio.id}
             position={sitio.coords}
             icon={colorMarcadorPosicion(sitio.categoria)}
+            eventHandlers={{
+              click: () => {
+                if (ejecutarOpenInfo) {
+                  onOpenInfo(sitio);
+                }
+              },
+            }}
           >
-            <Popup maxWidth={300} className="custom-popup">
-              <PopupCard sitio={sitio} onOpenInfo={() => onOpenInfo(sitio)} />
-            </Popup>
+            {!ejecutarOpenInfo && (
+              <Popup maxWidth={300} className="custom-popup">
+                <PopupCard sitio={sitio} onOpenInfo={() => onOpenInfo(sitio)} />
+              </Popup>
+            )}
           </Marker>
         ))}
         {/* Marcador del usuario */}
