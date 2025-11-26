@@ -3,12 +3,12 @@ import MapFilters from "./MapFilters";
 import MapView from "./MapView";
 import CartasLugares from "./CartasLugares";
 import styles from "./mapa.module.css";
-import InfoSitio from "./dialogs/InfoSitio";
 import { useMapFilters } from "../../hooks/useMapFilters";
 import { MapFiltersProvider } from "../../providers/MapFiltersProvider";
 import { Button, IconButton, useMediaQuery, useTheme} from "@mui/material";
 import { List, Map, MenuOpen } from "@mui/icons-material";
 import ViewMode from "./toggle/ViewMode";
+import DialogInfoSitio from "./dialogs/DialogInfoSitio";
 
 function MapaCore() {
   const theme = useTheme();
@@ -96,7 +96,7 @@ function MapaCore() {
       )}
       
       {openInfoSitio && (
-        <InfoSitio
+        <DialogInfoSitio
           open={openInfoSitio}
           sitio={sitio}
           onClose={handleCloseInfoSitio}

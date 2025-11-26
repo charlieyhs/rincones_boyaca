@@ -31,8 +31,6 @@ const MapView = ({ sitios, onOpenInfo }) => {
   const [mapStyle, setMapStyle] = useState('satellite');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isLandscape = useMediaQuery("(orientation: landscape)");
-  const ejecutarOpenInfo = isMobile || isLandscape;
 
   return (
     <div className={styles.mapa_wrapper}>
@@ -52,13 +50,13 @@ const MapView = ({ sitios, onOpenInfo }) => {
             icon={colorMarcadorPosicion(sitio.categoria)}
             eventHandlers={{
               click: () => {
-                if (ejecutarOpenInfo) {
+                if (isMobile) {
                   onOpenInfo(sitio);
                 }
               },
             }}
           >
-            {!ejecutarOpenInfo && (
+            {!isMobile && (
               <Popup maxWidth={300} className="custom-popup">
                 <PopupCard sitio={sitio} onOpenInfo={() => onOpenInfo(sitio)} />
               </Popup>
