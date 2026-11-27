@@ -35,6 +35,16 @@ const InfoSitio = ({sitio}) => {
             </Grid>
             </Grid>
 
+            {sitio.historia && (
+            <Grid size={{ xs: 12 }}>
+                <Typography variant="h6" sx={{ color: color, mb: 1 }}>
+                Historia
+                </Typography>
+                <Typography variant="body1" sx={{ lineHeight: 1.7, whiteSpace: "pre-line" }}>
+                {sitio.historia}
+                </Typography>
+            </Grid>
+            )}
 
             {/* Actividades y fotos */}
             <Grid size={{ xs: 12, md: 6 }}>

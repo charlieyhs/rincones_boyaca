@@ -16,6 +16,7 @@ import {
 import InfoSitio from "./InfoSitio";
 import ComoLlegar from "./ComoLlegar";
 import { useState } from "react";
+import { Link } from "react-router";
 import { colorCategoria } from "../../../utils/mapsUtil";
 
 const DialogInfoSitio = ({ sitio, open, onClose, onVerEnMapa }) => {
@@ -91,7 +92,14 @@ const DialogInfoSitio = ({ sitio, open, onClose, onVerEnMapa }) => {
         {comoLlegar ? <ComoLlegar sitio={sitio} /> : <InfoSitio sitio={sitio} />}
       </DialogContent>
 
-      <DialogActions sx={{ p: 3, gap: 1 }}>
+      <DialogActions sx={{ p: 3, gap: 1, flexWrap: "wrap" }}>
+        <Button
+          component={Link}
+          to={`/sitios/${sitio.id}`}
+          sx={{ color, mr: "auto" }}
+        >
+          Ficha completa y planes
+        </Button>
         <Button
           variant="outlined"
           onClick={() => onVerEnMapa(sitio)}
