@@ -12,6 +12,8 @@ Mapa interactivo para descubrir sitios turísticos de Boyacá (Colombia). Muestr
 - **Vista mapa / lista**, con un switch en móvil y botones en escritorio.
 - **Ficha del sitio** en un diálogo (pantalla completa en pantallas pequeñas), con **Ver en mapa** para centrar el sitio y **Cómo llegar** para abrir la ruta en Google Maps o Waze.
 - **Mi ubicación**: centra el mapa en la posición del usuario (geolocalización del navegador).
+- **Planes turísticos** (`/planes`): recorridos de operadores con itinerario por día, ruta numerada en el mapa, precio, qué incluye y contacto por WhatsApp. Por ahora los planes y empresas son de ejemplo.
+- **Páginas con URL propia** para cada plan (`/planes/:slug`) y cada sitio (`/sitios/:id`), para compartirlas por enlace.
 - **Diseño responsive**: en dispositivos táctiles el marcador abre directamente la ficha; en escritorio muestra un popup previo.
 
 ## Tecnologías
@@ -21,6 +23,7 @@ Mapa interactivo para descubrir sitios turísticos de Boyacá (Colombia). Muestr
 | UI | React 19 |
 | Componentes | MUI 7 (Material UI) + Emotion |
 | Mapas | Leaflet 1.9 + React Leaflet 5 |
+| Rutas | React Router 7 |
 | Build | Vite (rolldown-vite) |
 | Calidad | ESLint 9 |
 
@@ -103,15 +106,44 @@ Los sitios están en [`src/data/sitios.js`](src/data/sitios.js). Para añadir un
 }
 ```
 
+Campo opcional: `historia` (texto largo; se muestra en la ficha si existe).
+
 El color de cada sitio sale de su categoría. Las categorías y sus colores se definen en [`src/utils/mapsUtil.js`](src/utils/mapsUtil.js).
+
+## Agregar un plan turístico
+
+Los planes y empresas están en [`src/data/planes.js`](src/data/planes.js). Un plan es una lista ordenada de paradas sobre sitios del catálogo:
+
+```js
+{
+  id: 'p3',
+  slug: 'nombre-del-plan',          // URL: /planes/nombre-del-plan
+  titulo: 'Nombre del plan',
+  empresaId: 'e1',                  // id de una empresa en `empresas`
+  resumen: 'Descripción corta...',
+  imagen: 'https://...',
+  duracionDias: 1,
+  dificultad: 'Fácil',
+  precio: { valor: 100000, moneda: 'COP', unidad: 'por persona' },
+  puntoEncuentro: 'Lugar y hora',
+  incluye: ['Guía'],
+  noIncluye: ['Entradas'],
+  paradas: [
+    { sitioId: '1', dia: 1, duracion: '2 h', nota: 'Qué se hace aquí' },
+  ],
+}
+```
+
+Si la empresa tiene `whatsapp` (formato internacional, p. ej. `'573001234567'`), el plan muestra el botón **Reservar por WhatsApp**.
 
 ## Despliegue
 
 La app se publica en **GitHub Pages** con GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)):
 
 1. Cada push a `main` (o una ejecución manual del workflow) instala dependencias, corre `npm run lint` y `npm run build`.
-2. El contenido de `dist/` se sube como artefacto y se despliega en Pages.
-3. `vite.config.js` usa `base: "/rincones_boyaca/"`, que coincide con la ruta del repositorio en Pages.
+2. Copia `dist/index.html` a `dist/404.html`, para que GitHub Pages cargue la app al entrar directo a una ruta como `/planes`.
+3. El contenido de `dist/` se sube como artefacto y se despliega en Pages.
+4. `vite.config.js` usa `base: "/rincones_boyaca/"`, que coincide con la ruta del repositorio en Pages.
 
 La carpeta `dist/` no se versiona. En *Settings → Pages* el origen debe ser **GitHub Actions**.
 

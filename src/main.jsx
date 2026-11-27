@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router'
 import App from './App.jsx'
 import 'leaflet/dist/leaflet.css';
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -15,8 +16,10 @@ const theme = createTheme({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-        <App />
-    </ThemeProvider>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <ThemeProvider theme={theme}>
+          <App />
+      </ThemeProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
