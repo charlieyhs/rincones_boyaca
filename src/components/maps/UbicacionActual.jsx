@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
@@ -15,8 +14,5 @@ const UbicacionActual = ({position}) => {
   return null;
 }
 
-UbicacionActual.propTypes = {
-  position: PropTypes.array
-};
 
 export default UbicacionActual;

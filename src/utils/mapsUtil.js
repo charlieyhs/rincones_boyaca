@@ -8,6 +8,12 @@ export const colors = {
   NATURAL: '#f59e0b'
 };
 
+export const COLOR_DEFECTO = '#6366f1';
+
+export function colorCategoria(categoria) {
+  return colors[categoria] || COLOR_DEFECTO;
+}
+
 export const coloresCategorias = Object.entries(colors).map(([id, color]) => ({
   id,
   label: id.charAt(0) + id.slice(1).toLowerCase(),
@@ -15,7 +21,7 @@ export const coloresCategorias = Object.entries(colors).map(([id, color]) => ({
 }));
 
 export function colorMarcadorPosicion(categoria) {
-  const color = colors[categoria] || '#6366f1';
+  const color = colorCategoria(categoria);
   
   const svgIcon = `
     <svg width="40" height="50" viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">

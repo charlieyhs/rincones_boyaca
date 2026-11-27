@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import styles from './mapa.module.css'
+import { colorCategoria } from '../../utils/mapsUtil';
 import { MonetizationOn, PushPin, Star, Warning } from '@mui/icons-material';
 
 const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
@@ -29,7 +29,7 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
                 <div className={styles.listCardHeader}>
                   <span 
                     className={styles.listCardCategory}
-                    style={{ background: sitio.color }}
+                    style={{ background: colorCategoria(sitio.categoria) }}
                   >
                     {sitio.categoria}
                   </span>
@@ -60,21 +60,5 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
     );
 };
 
-CartasLugares.propTypes = {
-    openFilters: PropTypes.bool,
-    sitiosFiltrados: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        nombre: PropTypes.string.isRequired,
-        categoria: PropTypes.string.isRequired,
-        color: PropTypes.string,
-        imagen: PropTypes.string,
-        ubicacion: PropTypes.string,
-        descripcion: PropTypes.string,
-        precio: PropTypes.string,
-        calificacion: PropTypes.number,
-        resenas: PropTypes.number,
-    })).isRequired,
-    handleOpenInfoSitio: PropTypes.func,
-};
 
 export default CartasLugares;
