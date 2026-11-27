@@ -21,7 +21,8 @@ export default defineConfig({
   plugins: [react()],
   base: "/rincones_boyaca/",
   build: {
-    outDir: 'docs',
+    // Se despliega con GitHub Actions (.github/workflows/deploy.yml); no se versiona.
+    outDir: 'dist',
     chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {

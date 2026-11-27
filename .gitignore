@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build antiguo (ahora se despliega con GitHub Actions desde dist/)
+docs
