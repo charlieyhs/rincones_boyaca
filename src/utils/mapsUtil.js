@@ -66,7 +66,20 @@ export function colorMarcadorPosicion(categoria) {
   });
 }
 
-export function marcadorPosicionActual() {  
+/** Marcador circular con el número de la parada, para el itinerario de un plan. */
+export function marcadorNumerado(numero, color = COLOR_DEFECTO) {
+  return new L.DivIcon({
+    html: `<div style="width:32px;height:32px;border-radius:50%;background:${color};color:#fff;
+      border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;
+      justify-content:center;font:bold 14px sans-serif">${numero}</div>`,
+    className: 'marcador-numerado',
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16],
+  });
+}
+
+export function marcadorPosicionActual() {
   const svgIcon = `
     <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
       <!-- Onda exterior animada -->
