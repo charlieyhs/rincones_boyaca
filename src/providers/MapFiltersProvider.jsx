@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { MapFiltersContext } from "../context/MapFiltersContext";
-import PropTypes from "prop-types";
 import { sitiosTuristicos } from "../data/sitios";
 
 export function MapFiltersProvider({ children }) {
@@ -48,7 +47,4 @@ export function MapFiltersProvider({ children }) {
   );
 }
 
-MapFiltersProvider.propTypes = {
-    children : PropTypes.node.isRequired,
-};
 

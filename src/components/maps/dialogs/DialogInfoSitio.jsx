@@ -10,17 +10,19 @@ import {
   DialogTitle,
   IconButton,
   Zoom,
+  useMediaQuery,
 } from "@mui/material";
 
-import PropTypes from "prop-types";
 import InfoSitio from "./InfoSitio";
 import ComoLlegar from "./ComoLlegar";
 import { useState } from "react";
-const COLOR_DEFECTO = "#66bb6a";
+import { colorCategoria } from "../../../utils/mapsUtil";
 
-const DialogInfoSitio = ({ sitio, open, onClose }) => {
+const DialogInfoSitio = ({ sitio, open, onClose, onVerEnMapa }) => {
   const [comoLlegar, setComoLlegar] = useState(false);
-  
+  const color = colorCategoria(sitio.categoria);
+  const pantallaPequena = useMediaQuery("(max-width: 768px)");
+
   const abrirDialogoRuta = () => {
     setComoLlegar(true);
   };
@@ -37,14 +39,14 @@ const DialogInfoSitio = ({ sitio, open, onClose }) => {
       fullWidth
       slots={{ transition: Zoom }}
       transitionDuration={400}
-      fullScreen={window.innerWidth <= 768}
+      fullScreen={pantallaPequena}
       slotProps={{
         paper: {
           sx: {
             background: "linear-gradient(145deg, #0a2a1d 0%, #143b2b 100%)",
             color: "#fff",
             borderRadius: 3,
-            border: `1px solid ${sitio?.color || COLOR_DEFECTO}40`,
+            border: `1px solid ${color}40`,
           },
         },
       }}
@@ -59,21 +61,21 @@ const DialogInfoSitio = ({ sitio, open, onClose }) => {
               display: "inline-flex",
               p: 2,
               borderRadius: "50%",
-              backgroundColor: `${sitio.color || ""}20`,
-              color: sitio.color || COLOR_DEFECTO,
+              backgroundColor: `${color}20`,
+              color: color,
             }}
           >
             <Hiking />
           </Box>
           <Box>
-            <h2 style={{color: sitio.color || COLOR_DEFECTO, fontWeight: "bold"}}>
+            <h2 style={{color: color, fontWeight: "bold"}}>
               {sitio.nombre}
             </h2>
             <Chip
               label={sitio.categoria}
               size="small"
               sx={{
-                backgroundColor: sitio.color || COLOR_DEFECTO,
+                backgroundColor: color,
                 color: "#fff",
                 mt: 1,
               }}
@@ -91,12 +93,26 @@ const DialogInfoSitio = ({ sitio, open, onClose }) => {
 
       <DialogActions sx={{ p: 3, gap: 1 }}>
         <Button
+          variant="outlined"
+          onClick={() => onVerEnMapa(sitio)}
+          sx={{
+            borderColor: color,
+            color: color,
+            "&:hover": {
+              backgroundColor: `${color}20`,
+              borderColor: color,
+            },
+          }}
+        >
+          Ver en mapa
+        </Button>
+        <Button
           variant="contained"
           onClick={comoLlegar ? verInformacion : abrirDialogoRuta}
           sx={{
-            backgroundColor: sitio.color || COLOR_DEFECTO,
+            backgroundColor: color,
             "&:hover": {
-              backgroundColor: sitio.color || COLOR_DEFECTO,
+              backgroundColor: color,
               filter: "brightness(0.9)",
             },
           }}
@@ -108,33 +124,5 @@ const DialogInfoSitio = ({ sitio, open, onClose }) => {
   );
 };
 
-DialogInfoSitio.propTypes = {
-  sitio: PropTypes.shape({
-    nombre: PropTypes.string.isRequired,
-    categoria: PropTypes.string.isRequired,
-    imagen: PropTypes.string.isRequired,
-    descripcion: PropTypes.string.isRequired,
-    ubicacion: PropTypes.string.isRequired,
-    horario: PropTypes.string,
-    precio: PropTypes.string,
-    color: PropTypes.string,
-    actividades: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        nombre: PropTypes.string.isRequired
-      })
-    ),
-    galeria: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired
-      })
-    ),
-    calificacion: PropTypes.number,
-    resenas: PropTypes.number,
-  }).isRequired,
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default DialogInfoSitio;

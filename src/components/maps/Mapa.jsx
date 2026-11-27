@@ -20,6 +20,7 @@ function MapaCore() {
   const [sitio, setSitio] = useState(null);
   const [viewMode, setViewMode] = useState("map");
   const [openFilters, setOpenFilters] = useState(false);
+  const [enfoque, setEnfoque] = useState(null);
 
 
   const toggleFilters = useCallback(() => {
@@ -36,8 +37,15 @@ function MapaCore() {
   }, []);
 
   const handleViewModeChange = (mode) => {
-    setViewMode(mode); 
+    setViewMode(mode);
+    setEnfoque(null);
   };
+
+  const handleVerEnMapa = useCallback((sitio) => {
+    setOpenInfoSitio(false);
+    setViewMode("map");
+    setEnfoque({ sitio, id: Date.now() });
+  }, []);
 
   return (
     <div className={styles.mapContainer}>
@@ -86,7 +94,7 @@ function MapaCore() {
 
       {/* Mapa o lista */}
       {viewMode === "map" ? (
-        <MapView sitios={sitiosFiltrados} onOpenInfo={handleOpenInfoSitio} />
+        <MapView sitios={sitiosFiltrados} onOpenInfo={handleOpenInfoSitio} enfoque={enfoque} />
       ) : (
         <CartasLugares 
           openFilters={openFilters} 
@@ -100,6 +108,7 @@ function MapaCore() {
           open={openInfoSitio}
           sitio={sitio}
           onClose={handleCloseInfoSitio}
+          onVerEnMapa={handleVerEnMapa}
         />
       )}
     </div>

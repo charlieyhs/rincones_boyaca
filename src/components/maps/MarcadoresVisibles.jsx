@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import L from 'leaflet';
 import { useMap } from "react-leaflet";
-import PropTypes from "prop-types";
 
 const MarcadoresVisibles = ({ sitios }) => {
   const map = useMap();
@@ -15,7 +14,4 @@ const MarcadoresVisibles = ({ sitios }) => {
   
   return null;
 };
-MarcadoresVisibles.propTypes = {
-  sitios: PropTypes.array.isRequired
-}
 export default MarcadoresVisibles;

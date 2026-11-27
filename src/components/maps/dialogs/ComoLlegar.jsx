@@ -1,5 +1,4 @@
 import { Dialog } from "@mui/material";
-import PropTypes from "prop-types";
 
 const ComoLlegar = ({open, onClose}) => {
 
@@ -14,8 +13,4 @@ const ComoLlegar = ({open, onClose}) => {
         </Dialog>
     );
 };
-ComoLlegar.propTypes = {
-    open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-}
 export default ComoLlegar;

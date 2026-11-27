@@ -1,11 +1,11 @@
 import styles from "./InfoSito.module.css"
 import { CameraAlt, Hiking, MonetizationOn, PushPin, Star, Timeline, WatchLater } from "@mui/icons-material";
 import { Box, CardMedia, Chip, Grid, LinearProgress, Paper, Typography } from "@mui/material";
-import PropTypes from "prop-types";
-
-const COLOR_DEFECTO = "#66bb6a";
+import { colorCategoria } from "../../../utils/mapsUtil";
 
 const InfoSitio = ({sitio}) => {
+    const color = colorCategoria(sitio.categoria);
+
     return (
         <Grid container spacing={3}>
             <Grid container spacing={2}>
@@ -18,14 +18,14 @@ const InfoSitio = ({sitio}) => {
                     height: 300,
                     borderRadius: 2,
                     mb: 2,
-                    border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
+                    border: `1px solid ${color}40`,
                 }}
                 />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                 variant="h6"
-                sx={{ color: sitio.color || COLOR_DEFECTO, mb: 1 }}
+                sx={{ color: color, mb: 1 }}
                 >
                 Descripción
                 </Typography>
@@ -48,7 +48,7 @@ const InfoSitio = ({sitio}) => {
                 <Typography
                 variant="h6"
                 sx={{
-                    color: sitio.color || COLOR_DEFECTO,
+                    color: color,
                     mb: 2,
                     display: "flex",
                     alignItems: "center",
@@ -64,7 +64,7 @@ const InfoSitio = ({sitio}) => {
                     size="small"
                     className={styles.chip_actividad}
                     sx={{
-                    backgroundColor: `${sitio.color || COLOR_DEFECTO}20`,
+                    backgroundColor: `${color}20`,
                     }}
                 />
                 ))}
@@ -82,7 +82,7 @@ const InfoSitio = ({sitio}) => {
                 <Typography
                 variant="h6"
                 sx={{
-                    color: sitio.color || COLOR_DEFECTO,
+                    color: color,
                     mb: 2,
                     display: "flex",
                     alignItems: "center",
@@ -103,7 +103,7 @@ const InfoSitio = ({sitio}) => {
                         height: 80,
                         borderRadius: 1,
                         objectFit: "cover",
-                        border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
+                        border: `1px solid ${color}40`,
                     }}
                     />
                 ))}
@@ -123,7 +123,7 @@ const InfoSitio = ({sitio}) => {
                 <Typography
                 variant="h6"
                 sx={{
-                    color: sitio.color || COLOR_DEFECTO,
+                    color: color,
                     mb: 2,
                     display: "flex",
                     alignItems: "center",
@@ -150,7 +150,7 @@ const InfoSitio = ({sitio}) => {
                 <Typography
                 variant="h6"
                 sx={{
-                    color: sitio.color || COLOR_DEFECTO,
+                    color: color,
                     mb: 1,
                     display: "flex",
                     alignItems: "center",
@@ -167,7 +167,7 @@ const InfoSitio = ({sitio}) => {
                     borderRadius: 4,
                     backgroundColor: "rgba(255,255,255,0.1)",
                     "& .MuiLinearProgress-bar": {
-                    backgroundColor: sitio.color || COLOR_DEFECTO,
+                    backgroundColor: color,
                     },
                 }}
                 />
@@ -180,34 +180,5 @@ const InfoSitio = ({sitio}) => {
     );
 };
 
-InfoSitio.propTypes = {
-  sitio: PropTypes.shape({
-    nombre: PropTypes.string.isRequired,
-    imagen: PropTypes.string.isRequired,
-    color: PropTypes.string, 
-    descripcion: PropTypes.string.isRequired,
-    
-    actividades: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-        nombre: PropTypes.string.isRequired,
-      })
-    ),
-    
-    galeria: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-        url: PropTypes.string.isRequired,
-      })
-    ),
-
-    ubicacion: PropTypes.string.isRequired,
-    horario: PropTypes.string.isRequired,
-    precio: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, 
-    
-    calificacion: PropTypes.number.isRequired,
-    resenas: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
 export default InfoSitio;

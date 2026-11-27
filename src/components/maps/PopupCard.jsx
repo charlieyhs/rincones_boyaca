@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './mapa.module.css';
 import { colors } from '../../utils/mapsUtil';
 import { StarBorder } from '@mui/icons-material';
@@ -40,16 +39,5 @@ const PopupCard = ({ sitio, onOpenInfo }) => {
   );
 };
 
-PopupCard.propTypes = {
-  sitio: PropTypes.shape({
-    color: PropTypes.string,
-    categoria: PropTypes.string.isRequired,
-    nombre: PropTypes.string.isRequired,
-    descripcion: PropTypes.string.isRequired,
-    imagen: PropTypes.string.isRequired,
-    calificacion: PropTypes.number.isRequired,
-  }).isRequired,
-  onOpenInfo: PropTypes.func.isRequired,
-};
 
 export default PopupCard;
