@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { MapFiltersContext } from "../context/MapFiltersContext";
 import { sitiosTuristicos } from "../data/sitios";
+import { normalizarTexto } from "../utils/texto";
 
 export function MapFiltersProvider({ children }) {
   const [filtroCategoria, setFiltroCategoria] = useState(null);
@@ -12,12 +13,11 @@ export function MapFiltersProvider({ children }) {
     if (filtroCategoria?.length > 0)
       filtered = filtered.filter((s) => filtroCategoria.includes(s.categoria));
 
-    if (searchTerm)
+    const busqueda = normalizarTexto(searchTerm?.trim());
+    if (busqueda)
       filtered = filtered.filter((s) =>
-        [s.nombre, s.descripcion, s.ubicacion]
-          .join(" ")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
+        normalizarTexto([s.nombre, s.descripcion, s.ubicacion].join(" "))
+          .includes(busqueda)
       );
 
     return filtered;
