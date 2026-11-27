@@ -1,5 +1,6 @@
 import styles from './mapa.module.css'
 import { colorCategoria } from '../../utils/mapsUtil';
+import { truncar } from '../../utils/texto';
 import { MonetizationOn, PushPin, Star, Warning } from '@mui/icons-material';
 
 const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
@@ -44,7 +45,7 @@ const CartasLugares = ({openFilters, sitiosFiltrados, handleOpenInfoSitio}) => {
                   {sitio.ubicacion}
                 </p>
                 <p className={styles.listCardDescription}>
-                  {sitio.descripcion.substring(0, 120)}...
+                  {truncar(sitio.descripcion, 120)}
                 </p>
                 <div className={styles.listCardFooter}>
                   <span className={styles.listCardPrice}>

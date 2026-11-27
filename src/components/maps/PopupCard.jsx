@@ -1,10 +1,7 @@
 import styles from './mapa.module.css';
-import { colors } from '../../utils/mapsUtil';
+import { colorCategoria } from '../../utils/mapsUtil';
+import { truncar } from '../../utils/texto';
 import { StarBorder } from '@mui/icons-material';
-
-function truncate(text, n = 100) {
-  return text.length > n ? text.slice(0, n) + "..." : text;
-}
 
 const PopupCard = ({ sitio, onOpenInfo }) => {
   return (
@@ -15,7 +12,7 @@ const PopupCard = ({ sitio, onOpenInfo }) => {
       <div style={{padding: '15px'}}>
 
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <p style={{margin: 0, color: colors[sitio.categoria] || '#1f2937' }}>{sitio.categoria}</p>
+          <p style={{margin: 0, color: colorCategoria(sitio.categoria) }}>{sitio.categoria}</p>
           <div style={{display: 'flex', alignItems: 'center',}}>
             <StarBorder style={{fontSize: 'large', color: '#EAB308',}} sx={{ mr: 1 }} /> 
             <p style={{margin: 0, fontWeight: 'bold'}}>{sitio.calificacion}</p>
@@ -23,7 +20,7 @@ const PopupCard = ({ sitio, onOpenInfo }) => {
         </div>
         <h3 className={styles.popupTitle}>{sitio.nombre}</h3>
         <p className={styles.popupDescription}>
-          {truncate(sitio.descripcion, 100)}
+          {truncar(sitio.descripcion, 100)}
         </p>
         <button
           onClick={(e) => {
