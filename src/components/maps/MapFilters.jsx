@@ -18,7 +18,6 @@ import styles from "./mapa.module.css";
 import { VERDE_BOYACA } from "../../constants";
 import { useState } from "react";
 import { coloresCategorias } from "../../utils/mapsUtil";
-import PropTypes from "prop-types";
 
 const MapFilters = ({ open, onClose }) => {
 
@@ -166,9 +165,5 @@ const MapFilters = ({ open, onClose }) => {
   );
 };
 
-MapFilters.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired, // Agregar onClose a propTypes
-};
 
 export default MapFilters;

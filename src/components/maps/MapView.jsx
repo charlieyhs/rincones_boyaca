@@ -3,12 +3,11 @@ import { colorMarcadorPosicion, marcadorPosicionActual } from '../../utils/mapsU
 import MarcadoresVisibles from './MarcadoresVisibles';
 import PopupCard from './PopupCard';
 import styles from './mapa.module.css';
-import PropTypes from 'prop-types';
 import MapFooter from './MapFooter';
 import { useState } from 'react';
 import UbicacionActual from './UbicacionActual';
-import { useTheme } from '@emotion/react';
-import { useMediaQuery } from '@mui/material';
+import EnfocarSitio from './EnfocarSitio';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const TILE_STYLES = {
   satellite: {
@@ -19,20 +18,21 @@ const TILE_STYLES = {
     url: "https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png",
     attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team'
   },
-    smooth: {
+  smooth: {
     url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
     attribution: '© OpenStreetMap contributors © CARTO'
   }
-
 };
 
-const MapView = ({ sitios, onOpenInfo }) => {
+const MapView = ({ sitios, onOpenInfo, enfoque }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [mapStyle, setMapStyle] = useState('satellite');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isLandscape = useMediaQuery("(orientation: landscape)");
-  const ejecutarOpenInfo = isMobile || isLandscape;
+  // Dispositivos táctiles (celular, tablet o celular en horizontal): abrir el detalle
+  // directamente en vez del popup. En escritorio (puntero fino) se muestra el popup.
+  const esTactil = useMediaQuery("(pointer: coarse)");
+  const ejecutarOpenInfo = isMobile || esTactil;
 
   return (
     <div className={styles.mapa_wrapper}>
@@ -44,6 +44,7 @@ const MapView = ({ sitios, onOpenInfo }) => {
         <TileLayer {...TILE_STYLES[mapStyle]} />
         <ZoomControl position="topright" />
         <MarcadoresVisibles sitios={sitios} />
+        {enfoque && <EnfocarSitio enfoque={enfoque} />}
 
         {sitios.map((sitio) => (
           <Marker
@@ -84,38 +85,6 @@ const MapView = ({ sitios, onOpenInfo }) => {
         />
     </div>
   );
-};
-
-MapView.propTypes = {
-  sitios: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      nombre: PropTypes.string.isRequired,
-      imagen: PropTypes.string.isRequired,
-      descripcion: PropTypes.string.isRequired,
-      ubicacion: PropTypes.string.isRequired,
-      horario: PropTypes.string.isRequired,
-      precio: PropTypes.string.isRequired,
-      color: PropTypes.string.isRequired,
-      actividades: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          nombre: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-      galeria: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-      calificacion: PropTypes.number.isRequired,
-      resenas: PropTypes.number.isRequired,
-      coords: PropTypes.arrayOf(PropTypes.number).isRequired,
-      categoria: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onOpenInfo: PropTypes.func.isRequired,
 };
 
 export default MapView;

@@ -14,13 +14,19 @@ import {
   Typography,
   Zoom,
   CardMedia,
-  Grid
+  Grid,
+  useMediaQuery
 } from "@mui/material";
+import { colorCategoria } from "../../../utils/mapsUtil";
 
-import PropTypes from "prop-types";
-const COLOR_DEFECTO = "#66bb6a";
+function urlComoLlegar([lat, lng]) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+}
 
-const InfoSitio = ({ sitio, open, onClose }) => {
+const InfoSitio = ({ sitio, open, onClose, onVerEnMapa }) => {
+  const color = colorCategoria(sitio.categoria);
+  const pantallaPequena = useMediaQuery("(max-width: 768px)");
+
   return (
     <Dialog
       open={open}
@@ -29,14 +35,14 @@ const InfoSitio = ({ sitio, open, onClose }) => {
       fullWidth
       slots={{ transition: Zoom }}
       transitionDuration={400}
-      fullScreen={window.innerWidth <= 768}
+      fullScreen={pantallaPequena}
       slotProps={{
         paper: {
           sx: {
             background: "linear-gradient(145deg, #0a2a1d 0%, #143b2b 100%)",
             color: "#fff",
             borderRadius: 3,
-            border: `1px solid ${sitio?.color || COLOR_DEFECTO}40`,
+            border: `1px solid ${color}40`,
           },
         },
       }}
@@ -51,21 +57,21 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               display: "inline-flex",
               p: 2,
               borderRadius: "50%",
-              backgroundColor: `${sitio.color || ""}20`,
-              color: sitio.color || COLOR_DEFECTO,
+              backgroundColor: `${color}20`,
+              color: color,
             }}
           >
             <Hiking />
           </Box>
           <Box>
-            <h2 style={{color: sitio.color || COLOR_DEFECTO, fontWeight: "bold"}}>
+            <h2 style={{color: color, fontWeight: "bold"}}>
               {sitio.nombre}
             </h2>
             <Chip
               label={sitio.categoria}
               size="small"
               sx={{
-                backgroundColor: sitio.color || COLOR_DEFECTO,
+                backgroundColor: color,
                 color: "#fff",
                 mt: 1,
               }}
@@ -89,14 +95,14 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                   height: 300,
                   borderRadius: 2,
                   mb: 2,
-                  border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
+                  border: `1px solid ${color}40`,
                 }}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Typography
                 variant="h6"
-                sx={{ color: sitio.color || COLOR_DEFECTO, mb: 1 }}
+                sx={{ color: color, mb: 1 }}
               >
                 Descripción
               </Typography>
@@ -119,7 +125,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || COLOR_DEFECTO,
+                  color: color,
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
@@ -135,7 +141,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                   size="small"
                   className={styles.chip_actividad}
                   sx={{
-                    backgroundColor: `${sitio.color || COLOR_DEFECTO}20`,
+                    backgroundColor: `${color}20`,
                   }}
                 />
               ))}
@@ -153,7 +159,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || COLOR_DEFECTO,
+                  color: color,
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
@@ -174,7 +180,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                       height: 80,
                       borderRadius: 1,
                       objectFit: "cover",
-                      border: `1px solid ${sitio.color || COLOR_DEFECTO}40`,
+                      border: `1px solid ${color}40`,
                     }}
                   />
                 ))}
@@ -194,7 +200,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || COLOR_DEFECTO,
+                  color: color,
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
@@ -221,7 +227,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: sitio.color || COLOR_DEFECTO,
+                  color: color,
                   mb: 1,
                   display: "flex",
                   alignItems: "center",
@@ -238,7 +244,7 @@ const InfoSitio = ({ sitio, open, onClose }) => {
                   borderRadius: 4,
                   backgroundColor: "rgba(255,255,255,0.1)",
                   "& .MuiLinearProgress-bar": {
-                    backgroundColor: sitio.color || COLOR_DEFECTO,
+                    backgroundColor: color,
                   },
                 }}
               />
@@ -254,12 +260,13 @@ const InfoSitio = ({ sitio, open, onClose }) => {
       <DialogActions sx={{ p: 3, gap: 1 }}>
         <Button
           variant="outlined"
+          onClick={() => onVerEnMapa(sitio)}
           sx={{
-            borderColor: sitio.color || COLOR_DEFECTO,
-            color: sitio.color || COLOR_DEFECTO,
+            borderColor: color,
+            color: color,
             "&:hover": {
-              backgroundColor: `${sitio.color || COLOR_DEFECTO}20`,
-              borderColor: sitio.color || COLOR_DEFECTO,
+              backgroundColor: `${color}20`,
+              borderColor: color,
             },
           }}
         >
@@ -267,10 +274,14 @@ const InfoSitio = ({ sitio, open, onClose }) => {
         </Button>
         <Button
           variant="contained"
+          component="a"
+          href={urlComoLlegar(sitio.coords)}
+          target="_blank"
+          rel="noopener noreferrer"
           sx={{
-            backgroundColor: sitio.color || COLOR_DEFECTO,
+            backgroundColor: color,
             "&:hover": {
-              backgroundColor: sitio.color || COLOR_DEFECTO,
+              backgroundColor: color,
               filter: "brightness(0.9)",
             },
           }}
@@ -282,33 +293,5 @@ const InfoSitio = ({ sitio, open, onClose }) => {
   );
 };
 
-InfoSitio.propTypes = {
-  sitio: PropTypes.shape({
-    nombre: PropTypes.string.isRequired,
-    categoria: PropTypes.string.isRequired,
-    imagen: PropTypes.string.isRequired,
-    descripcion: PropTypes.string.isRequired,
-    ubicacion: PropTypes.string.isRequired,
-    horario: PropTypes.string,
-    precio: PropTypes.string,
-    color: PropTypes.string,
-    actividades: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        nombre: PropTypes.string.isRequired
-      })
-    ),
-    galeria: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired
-      })
-    ),
-    calificacion: PropTypes.number,
-    resenas: PropTypes.number,
-  }).isRequired,
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default InfoSitio;

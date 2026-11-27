@@ -7,7 +7,6 @@ export const sitiosTuristicos = [
     ubicacion: 'Santa Bárbara, Boyacá',
     horario: 'Lunes a Domingo: 8:00 AM - 6:00 PM',
     precio: 'Entrada gratuita',
-    color: '#4caf50',
     actividades: [
       { id: '1-1', nombre: 'Recorrido arquitectónico' },
       { id: '1-2', nombre: 'Fotografía patrimonial' },
@@ -34,7 +33,6 @@ export const sitiosTuristicos = [
     ubicacion: 'Otanche, Boyacá',
     horario: 'Todos los días: 7:00 AM - 5:00 PM',
     precio: '$15.000 COP por persona',
-    color: '#2196f3',
     actividades: [
       { id: '2-1', nombre: 'Rappel en cascadas' },
       { id: '2-2', nombre: 'Senderismo' },
@@ -60,7 +58,6 @@ export const sitiosTuristicos = [
     ubicacion: 'San Martín, Boyacá',
     horario: 'Miércoles a Domingo: 9:00 AM - 5:00 PM',
     precio: '$10.000 COP por persona',
-    color: '#ff9800',
     actividades: [
       { id: '3-1', nombre: 'Tour cultural' },
       { id: '3-2', nombre: 'Artesanías locales' },
@@ -87,7 +84,6 @@ export const sitiosTuristicos = [
     ubicacion: 'Coscuez, Boyacá',
     horario: 'Todos los días: 6:00 AM - 7:00 PM',
     precio: '$8.000 COP por persona',
-    color: '#9c27b0',
     actividades: [
       { id: '4-1', nombre: 'Fotografía de paisajes' },
       { id: '4-2', nombre: 'Amaneceres y atardeceres' },

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './mapa.module.css';
 import { IconButton } from '@mui/material';
 import { useCallback } from 'react';
@@ -68,10 +67,5 @@ const MapFooter = ({ mapStyle, setMapStyle, setUserLocation }) => {
   );
 };
 
-MapFooter.propTypes = {
-  mapStyle: PropTypes.oneOf(['satellite', 'street', 'smooth']).isRequired,
-  setMapStyle: PropTypes.func.isRequired,
-  setUserLocation: PropTypes.func.isRequired,
-};
 
 export default MapFooter;
