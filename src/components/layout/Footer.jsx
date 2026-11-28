@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { GitHub } from "@mui/icons-material";
+import { SECCIONES } from "./secciones";
 
 const REPOSITORIO = "https://github.com/charlieyhs/rincones_boyaca";
 
@@ -26,8 +27,9 @@ const Footer = () => (
       <nav className="app-footer-columna" aria-label="Secciones del pie de página">
         <h2>Explora</h2>
         <ul>
-          <li><Link to="/">Mapa de sitios</Link></li>
-          <li><Link to="/planes">Planes turísticos</Link></li>
+          {SECCIONES.map(({ to, label }) => (
+            <li key={to}><Link to={to}>{label}</Link></li>
+          ))}
         </ul>
       </nav>
 
