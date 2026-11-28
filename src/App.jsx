@@ -5,6 +5,7 @@ import PlanesPage from "./pages/PlanesPage";
 import PlanDetallePage from "./pages/PlanDetallePage";
 import SitioDetallePage from "./pages/SitioDetallePage";
 import NoEncontradoPage from "./pages/NoEncontradoPage";
+import Footer from "./components/layout/Footer";
 import './app.css'
 
 /** Al cambiar de página, vuelve al inicio del scroll. */
@@ -40,6 +41,8 @@ function App() {
           <Route path="*" element={<NoEncontradoPage />} />
         </Routes>
       </main>
+
+      <Footer />
     </div>
   );
 }
